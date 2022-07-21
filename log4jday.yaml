@@ -47,6 +47,7 @@ requests:
         X-Druid-Comment: ${java:${env:NONEXISTENV:-abrahackbaby}}
         X-Forwarded-For: ${java:${env:NONEXISTENV:-abrahackbaby}}
         X-Origin: ${java:${env:NONEXISTENV:-abrahackbaby}}
+        Content-Type: ${java:${env:NONEXISTENV:-abrahackbaby}}
 
     stop-at-first-match: true
     
